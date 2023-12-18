@@ -4,14 +4,21 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 using static System.Net.Mime.MediaTypeNames;
 
 namespace CriptoVigeener
 {
     internal class SearchLenKey
     {
-        public static int getLenKey(string text, string[] alpha, int M )
+        public static int getLenKey(string text, string[] alpha, int M, DataGridView dataGridView1 )
         {
+            dataGridView1.Columns.Clear();
+            dataGridView1.Rows.Clear();
+            dataGridView1.Columns.Add("column0", "t=0");
+            dataGridView1.Rows.Add();
+            dataGridView1.Rows.Add();
+
             List<List<string>> list = new List<List<string>>();
             int LenKey = 0;
 
@@ -78,6 +85,9 @@ namespace CriptoVigeener
                         countIx++;
                     }
                 }
+
+                dataGridView1.Columns.Add("column"+t.ToString(),"t="+t.ToString());
+                dataGridView1.Rows[0].Cells[t].Value = ((double) IxList.Sum()/IxList.Count).ToString();
 
                 if (countIx == IxList.Count)
                 {
