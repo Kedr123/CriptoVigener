@@ -11,8 +11,10 @@ namespace CriptoVigeener
     {
         public static List<List<string>> getArray(string text, int t)
         {
+
             List<List<string>> list = new List<List<string>>();
 
+            // Данный цикл разбивает зашифрованный текс на подмассивы с длиной ключа (t)
             for (int j = 0; j < t; j++)
             {
                 list.Add(new List<string>());

@@ -12,13 +12,17 @@ namespace CriptoVigeener
     {
         public static int getLenKey(string text, string[] alpha, int M )
         {
+            // Переменная для формирования подмассивов
             List<List<string>> list = new List<List<string>>();
             int LenKey = 0;
 
+            // Выполняется пока не будет найдена длина ключа или пока предпологаемая длина ключа не станет равна дляне зашифрованного текста
             for (int t = 1; t < text.Length; t++)
             {
                 list.Clear();
 
+                // Выполняется пока j не станет меньше предпологаемой длины ключа
+                // Данный цикл разбивает зашифрованный текс на подмассивы с длиной предпологаемой длины ключа
                 for (int j = 0; j < t; j++)
                 {
                     list.Add(new List<string>());
@@ -38,12 +42,16 @@ namespace CriptoVigeener
 
                     }
                 }
+
+                // Если количество подмассивов равно нулю, то итерация пропускается
                 if (list.Count == 0) continue;
 
+                // Массив для полученных I(x)
                 List<double> IxList = new List<double>();
                 int count = 0;
                 int suma = 0;
 
+                // Данный цикл вычисляет I(x) для каждого подмассива
                 for (int i = 0; i < t; i++)
                 {
                     suma = 0;
@@ -60,17 +68,12 @@ namespace CriptoVigeener
                         }
                         suma += count * (count - 1);
                     }
-                   // Debug.WriteLine(suma);
-                   // Debug.WriteLine(list[0].Count);
-                   // Debug.WriteLine(list[0].Count - 1);
-                   // Debug.WriteLine((list[0].Count * (list[0].Count - 1)));
-                   // Debug.WriteLine(suma / (list[0].Count * (list[0].Count - 1)));
                     double prav = (double)suma / (list[0].Count * (list[0].Count - 1));
                     IxList.Add(prav);
                 }
 
-                //Debug.WriteLine(IxList);
                 int countIx = 0;
+                // Данный цикал увеличивает счётчик countIx если I(x) попало в заданной промежуток
                 foreach (var item in IxList)
                 {
                     if (item >= 0.045 && item <= 0.10)
@@ -79,6 +82,7 @@ namespace CriptoVigeener
                     }
                 }
 
+                // Если все I(x) попали в промежуток, то значит мы нашли длину ключа (но это не точно)
                 if (countIx == IxList.Count)
                 {
                     LenKey = t;
@@ -86,7 +90,7 @@ namespace CriptoVigeener
 
                 }
             }
-
+            // Возвращаем длину ключа
             return LenKey;
         }
     }
